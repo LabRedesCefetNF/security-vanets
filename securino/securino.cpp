@@ -45,7 +45,7 @@ byte * Securino::encript(String operacao, byte in[], byte k[] ){
    
     byte auxin[16];
     geraVetorInicializacao(IV);
-     show("IV: ",IV);
+    // show("IV: ",IV);
     // continuar daqui...
     for(byte i=0x00; i<0x10; i++){
       auxin[i] = in[i] ^ IV[i];
@@ -74,7 +74,6 @@ byte * Securino::decript(String operacao, byte in[], byte k[] ){
     byte auxIV[16];
 
     split(state,auxIV, in);
-    Serial.println(" ");
     
     setData(state);
     
