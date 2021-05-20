@@ -5,13 +5,25 @@
 // 
 // Author: Mike McCauley (mikem@airspayce.com) DO NOT CONTACT THE AUTHOR DIRECTLY: USE THE LISTS
 // Copyright (C) 2008 Mike McCauley
-// $Id: VirtualWire.h,v 1.10 2013/08/06 23:43:41 mikem Exp mikem $
+// $Id: VirtualWire.h,v 1.14 2014/03/26 01:09:36 mikem Exp mikem $
 
 /// \mainpage VirtualWire library for Arduino and other boards
 ///
 /// This is the VirtualWire library.
 ///
-/// VirtualWire is an library for Arduino, Maple and others that provides features to send short
+/// \par END OF LIFE NOTICE
+///
+/// This VirtualWire library has now been superceded by the RadioHead 
+/// library http://www.airspayce.com/mikem/arduino/RadioHead
+/// RadioHead and its RH_ASK driver provides all the features supported by VirtualWire, and much more
+/// besides, including Reliable Datagrams, Addressing, Routing and Meshes. All the platforms that
+/// VirtualWire supported are also supported by RadioHead.
+///
+/// This library will no longer be maintained or updated, but we will continue to publish
+/// it for the benefit of the the community. Nevertheless we recommend upgrading to RadioHead where
+/// possible.
+///
+/// VirtualWire is a library for Arduino, Maple and others that provides features to send short
 /// messages, without addressing, retransmit or acknowledgment, a bit like UDP
 /// over wireless, using ASK (amplitude shift keying). Supports a number of
 /// inexpensive radio transmitters and receivers. All that is required is
@@ -26,7 +38,7 @@
 /// message length and checksum. Messages are sent with 4-to-6 bit encoding
 /// for good DC balance, and a CRC checksum for message integrity.
 ///
-/// Why not just use a UART connected directly to the
+/// But why not just use a UART connected directly to the
 /// transmitter/receiver? As discussed in the RFM documentation, ASK receivers
 /// require a burst of training pulses to synchronize the transmitter and
 /// receiver, and also requires good balance between 0s and 1s in the message
@@ -40,23 +52,42 @@
 /// Example Arduino programs are included to show the main modes of use.
 ///
 /// The version of the package that this documentation refers to can be downloaded 
-/// from http://www.airspayce.com/mikem/arduino/VirtualWire/VirtualWire-1.20.zip
+/// from http://www.airspayce.com/mikem/arduino/VirtualWire/VirtualWire-1.27.zip
 /// You can find the latest version at http://www.airspayce.com/mikem/arduino/VirtualWire
 ///
-/// You can also find online help and disussion at http://groups.google.com/group/virtualwire
+/// You can also find online help and disussion at 
+/// http://groups.google.com/group/virtualwire
 /// Please use that group for all questions and discussions on this topic. 
 /// Do not contact the author directly, unless it is to discuss commercial licensing.
+/// Before asking a question or reporting a bug, please read http://www.catb.org/esr/faqs/smart-questions.html
+///
+/// \par Theory of operation
+///
+/// See ASH Transceiver Software Designer's Guide of 2002.08.07
+///   http://www.rfm.com/products/apnotes/tr_swg05.pdf
 ///
 /// \par Supported Hardware
-/// A range of communications hardware is supported. The ones listed below are
-/// available in common retail outlets in Australian and other countries for
-/// under $10 per unit. Many other modules may also work with this software.
-/// Runs on ATmega8/168 (Arduino Diecimila, Uno etc) and ATmega328 and possibly
-/// others. Also runs on on Energia with MSP430G2553 / G2452 and Arduino with 
-/// ATMega328 (courtesy Yannick DEVOS - XV4Y), but untested by us.
-/// It also runs on Teensy 3.0 (courtesy of Paul Stoffregen), but untested by us.
-/// Also compiles and runs on ATtiny85 in Arduino environment, courtesy r4z0r7o3.
-/// Also compiles on maple-ide-v0.0.12, and runs on Maple, flymaple 1.1 etc.
+///
+/// A range of communications
+/// hardware is supported. The ones listed below are available in common retail
+/// outlets in Australia and other countries for under $10 per unit. Many
+/// other modules may also work with this software. 
+///
+/// Runs on a wide range of Arduino processors using Arduino IDE 1.0 or later.
+/// Also runs on on Energia
+/// with MSP430G2553 / G2452 and Arduino with ATMega328 (courtesy Yannick DEVOS - XV4Y), 
+/// but untested by us. It also runs on Teensy 3.0 and 3.1 (courtesy of Paul
+/// Stoffregen) using the Arduino IDE 1.0.5 and the Teensyduino addon 1.18. 
+/// Also compiles and runs on ATtiny85 in
+/// Arduino environment, courtesy r4z0r7o3. Also compiles on maple-ide-v0.0.12,
+/// and runs on Maple, flymaple 1.1 etc. Runs on ATmega8/168 (Arduino Diecimila,
+/// Uno etc), ATmega328 and can run on almost any other AVR8 platform,
+/// without relying on the Arduino framework, by properly configuring the
+/// library using 'VirtualWire_Config.h' header file for describing the access
+/// to IO pins and for setting up the timer. From version 1.22 the library can
+/// be compiled by a C compiler (by renaming VirtualWire.cpp into
+/// VirtualWire.c) and can be easily integrated with other IDEs like 'Atmel
+/// Studio' for example (courtesy of Alexandru Mircescu).
 ///
 /// - Receivers
 ///  - RX-B1 (433.92MHz) (also known as ST-RX04-ASK)
@@ -69,23 +100,51 @@
 /// connecting pin 12 of one to 11 of the other and vice versa, like this for a duplex connection:
 ///
 /// <code>
+/// <pre>
 /// Arduino 1         wires         Arduino 1
 ///  D11-----------------------------D12
 ///  D12-----------------------------D11
 ///  GND-----------------------------GND
+/// </pre>
 /// </code>
 ///
 /// You can also connect 2 VirtualWire instances over a suitable analog
 /// transmitter/receiver, such as the audio channel of an A/V transmitter/receiver. You may need
 /// buffers at each end of the connection to convert the 0-5V digital output to a suitable analog voltage.
 ///
+/// Caution: ATTiny85 has only 2 timers, one (timer 0) usually used for
+/// millis() and one (timer 1) for PWM analog outputs. The VirtualWire
+/// library, when built for ATTiny85, takes over timer 0, which prevents use
+/// of millis() etc but does permit analog outputs.
+///
 /// \par Installation
+///
 /// To install, unzip the library into the libraries sub-directory of your
 /// Arduino application directory. Then launch the Arduino environment; you
 /// should see the library in the Sketch->Import Library menu, and example
 /// code in
 /// File->Sketchbook->Examples->VirtualWire menu.
 ///
+/// \par Donations
+///
+/// This library is offered under a free GPL license for those who want to use it that way. 
+/// We try hard to keep it up to date, fix bugs
+/// and to provide free support. If this library has helped you save time or money, please consider donating at
+/// http://www.airspayce.com or here:
+///
+/// \htmlonly <form action="https://www.paypal.com/cgi-bin/webscr" method="post"><input type="hidden" name="cmd" value="_donations" /> <input type="hidden" name="business" value="mikem@airspayce.com" /> <input type="hidden" name="lc" value="AU" /> <input type="hidden" name="item_name" value="Airspayce" /> <input type="hidden" name="item_number" value="VirtualWire" /> <input type="hidden" name="currency_code" value="USD" /> <input type="hidden" name="bn" value="PP-DonationsBF:btn_donateCC_LG.gif:NonHosted" /> <input type="image" alt="PayPal — The safer, easier way to pay online." name="submit" src="https://www.paypalobjects.com/en_AU/i/btn/btn_donateCC_LG.gif" /> <img alt="" src="https://www.paypalobjects.com/en_AU/i/scr/pixel.gif" width="1" height="1" border="0" /></form> \endhtmlonly
+/// 
+/// \par Trademarks
+///
+/// VirtualWire is a trademark of AirSpayce Pty Ltd. The VirtualWire mark was first used on April 20 2008 for
+/// international trade, and is used only in relation to data communications hardware and software and related services.
+/// It is not to be confused with any other similar marks covering other goods and services.
+///
+/// \par Copyright
+///
+/// This software is Copyright (C) 2011-2014 Mike McCauley. Use is subject to license
+/// conditions. The main licensing options available are GPL V2 or Commercial:
+/// 
 /// \par Open Source Licensing GPL V2
 ///
 /// This is the appropriate option if you want to share the source code of your
@@ -143,6 +202,20 @@
 ///               Minor improvements to timer setup for Maple. Name vw_tx_active() changed from incorrect
 ///               vx_tx_active()
 /// \version 1.20 Added support for ATtiny84, patched by Chuck Benedict.
+/// \version 1.21 Added support for most AVR8 platforms with proper configuration, without depending
+///               on Arduino environment, such as Atmega32u2, Atmega32U4, At90USB162 etc, 
+///               contributed by Alexandru Daniel Mircescu. 
+/// \version 1.22 Alexandru Daniel Mircescu fixed some problems with the recently added AtMega32U2 support.
+/// \version 1.23 Fixed some errors and inaccuracies in documentation, with the kind assistance of Alexandru
+///               Mircescu.
+/// \version 1.24 Minor performance improvement to vw_symbol_6to4() courtesy Ralph Doncaster.
+/// \version 1.25 Removed all use of floating point code, with assistance of a patch from Jim Remington.
+///               Result is smaller code size.
+/// \version 1.26 Removed util/crc16.h from distribution, since it is now included in arduino IDE
+///               since version 1.0. Support for arduino IDE prior to 1.0 is now abandoned.
+/// \version 1.27 Reinstated VWutil/crc16.h for the benefit of other platforms such as Teensy.
+///               Testing on Teensy 3.1. Added End Of Life notice. This library will no longer be maintained 
+///               and updated: use RadioHead instead.
 ///
 /// \par Implementation Details
 /// See: http://www.airspayce.com/mikem/arduino/VirtualWire.pdf
@@ -166,24 +239,47 @@
 #ifndef VirtualWire_h
 #define VirtualWire_h
 
-#include <stdlib.h>
-#if defined(ARDUINO)
- #if ARDUINO >= 100
+#include <stdint.h>
+#include "VirtualWire_Config.h"
+
+//	Currently supported platforms
+#define VW_PLATFORM_ARDUINO 1
+#define VW_PLATFORM_MSP430  2
+#define VW_PLATFORM_STM32   3
+#define VW_PLATFORM_GENERIC_AVR8 4
+#define VW_PLATFORM_UNO32   5
+
+//	Select platform automatically, if possible
+#ifndef VW_PLATFORM
+ #if defined(ARDUINO)
+  #define VW_PLATFORM VW_PLATFORM_ARDUINO
+ #elif defined(__MSP430G2452__) || defined(__MSP430G2553__)
+  #define VW_PLATFORM VW_PLATFORM_MSP430
+ #elif defined(MCU_STM32F103RE)
+  #define VW_PLATFORM VW_PLATFORM_STM32
+ #elif defined MPIDE
+  #define VW_PLATFORM VW_PLATFORM_UNO32
+ #else
+  #error Platform not defined! 	
+ #endif
+#endif
+
+#if (VW_PLATFORM == VW_PLATFORM_ARDUINO)
+ #if (ARDUINO >= 100)
   #include <Arduino.h>
  #else
   #include <wiring.h>
- #endif
-#elif defined(__MSP430G2452__) || defined(__MSP430G2553__) // LaunchPad specific
+#endif
+#elif (VW_PLATFORM == VW_PLATFORM_MSP430)// LaunchPad specific
  #include "legacymsp430.h"
  #include "Energia.h"
-#elif defined(MCU_STM32F103RE) // Maple etc
- #include <wirish.h>
- #include <string.h>
+#elif (VW_PLATFORM == VW_PLATFORM_STM32) // Maple etc
  #include <stdint.h>
-// Defines which timer to use on Maple
-#define MAPLE_TIMER 1
-#else // error
- #error Platform not defined
+ // Defines which timer to use on Maple
+ #define MAPLE_TIMER 1
+#elif (VW_PLATFORM == VW_PLATFORM_UNO32)
+#elif (VW_PLATFORM != VW_PLATFORM_GENERIC_AVR8) 
+	#error Platform unknown!
 #endif
 
 // These defs cause trouble on some versions of Arduino
@@ -191,17 +287,21 @@
 #undef double
 #undef round
 
+#ifndef VW_MAX_MESSAGE_LEN 
 /// Maximum number of bytes in a message, counting the byte count and FCS
-#define VW_MAX_MESSAGE_LEN 80
+	#define VW_MAX_MESSAGE_LEN 103
+#endif //VW_MAX_MESSAGE_LEN 
+
+#if !defined(VW_RX_SAMPLES_PER_BIT)
+/// Number of samples per bit
+	#define VW_RX_SAMPLES_PER_BIT 8
+#endif //VW_RX_SAMPLES_PER_BIT  
 
 /// The maximum payload length
 #define VW_MAX_PAYLOAD VW_MAX_MESSAGE_LEN-3
 
-/// The size of the receiver ramp. Ramp wraps modulu this number
+/// The size of the receiver ramp. Ramp wraps modulo this number
 #define VW_RX_RAMP_LEN 160
-
-/// Number of samples per bit
-#define VW_RX_SAMPLES_PER_BIT 8
 
 // Ramp adjustment parameters
 // Standard is if a transition occurs before VW_RAMP_TRANSITION (80) in the ramp,
@@ -230,8 +330,18 @@
 
 // Cant really do this as a real C++ class, since we need to have 
 // an ISR
+#ifdef __cplusplus
 extern "C"
 {
+#endif //__cplusplus
+
+#if (VW_PLATFORM != VW_PLATFORM_GENERIC_AVR8 )
+    // Set the digital IO pin which will be used to enable the transmitter (press to talk, PTT)'
+    /// This pin will only be accessed if
+    /// the transmitter is enabled
+    /// \param[in] pin The Arduino pin number to enable the transmitter. Defaults to 10.
+    extern void vw_set_ptt_pin(uint8_t pin);
+    
     /// Set the digital IO pin to be for transmit data. 
     /// This pin will only be accessed if
     /// the transmitter is enabled
@@ -243,6 +353,7 @@ extern "C"
     /// the receiver is enabled
     /// \param[in] pin The Arduino pin number for receiving data. Defaults to 11.
     extern void vw_set_rx_pin(uint8_t pin);
+#endif
 
     /// By default the RX pin is expected to be low when idle, and to pulse high 
     /// for each data pulse.
@@ -250,12 +361,6 @@ extern "C"
     /// inverts the logic of your signal, such as happens with some types of A/V tramsmitter.
     /// \param[in] inverted True to invert sense of receiver input
     extern void vw_set_rx_inverted(uint8_t inverted);
-
-    // Set the digital IO pin to enable the transmitter (press to talk, PTT)'
-    /// This pin will only be accessed if
-    /// the transmitter is enabled
-    /// \param[in] pin The Arduino pin number to enable the transmitter. Defaults to 10.
-    extern void vw_set_ptt_pin(uint8_t pin);
 
     /// By default the PTT pin goes high when the transmitter is enabled.
     /// This flag forces it low when the transmitter is enabled.
@@ -326,7 +431,10 @@ extern "C"
     /// Caution,: this is an 8 bit count and can easily overflow
     /// \return Count of bad messages received
     extern uint8_t vw_get_rx_bad();
-}
+
+#ifdef __cplusplus
+} //	extern "C"
+#endif //__cplusplus
 
 /// @example client.pde
 /// Client side of simple client/server pair using VirtualWire
@@ -340,4 +448,4 @@ extern "C"
 /// @example receiver.pde
 /// Transmitter side of simple one-way transmitter->receiver pair using VirtualWire
 
-#endif
+#endif /* VirtualWire_h */

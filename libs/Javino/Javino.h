@@ -4,7 +4,9 @@ Version Stable 2.0
   Created by Lazarin, NM and Pantoja, CE - January 29, 2015.
     nilson.lazarin@cefet-rj.br
 	carlos.pantoja@cefet-rj.br
+
   Updated in 2021-05-12
+
 */
 
 #ifndef Javino_h

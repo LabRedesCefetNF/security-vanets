@@ -4,7 +4,9 @@
     Created by Lazarin, NM and Pantoja, CE - January 29, 2015.
     nilson.lazarin@cefet-rj.br
 	carlos.pantoja@cefet-rj.br
+
   Updated in 2021-05-12
+
 */
 
 #include "Arduino.h"
