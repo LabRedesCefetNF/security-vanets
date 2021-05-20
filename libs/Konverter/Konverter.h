@@ -1,13 +1,14 @@
 #ifndef ASCIIHEX_H
 #define ASCIIHEX_H
 
-class AsciiHex
+class Konverter
 {
     public:
-        // Hexadecimal to ASCII conversion
         void hex2ascii(byte * hex, char * ascii);
-        // ASCII to Hexadecimal conversion
         void ascii2hex(char * ascii, byte * hex);
+		String byte2strBin(byte * in, int x);
+		void string2byteArray(String strIn, byte * bX);
+		String byte2strB64(byte * byteIn, int x);
 };
 
 #endif

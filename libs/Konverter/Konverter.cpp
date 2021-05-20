@@ -1,0 +1,57 @@
+#include "Arduino.h"
+#include "Konverter.h"
+#include "Base64.h"
+
+// Hexadecimal to ASCII conversion
+void Konverter::hex2ascii(byte * hex, char * ascii){
+  for(byte i = 0; i < 16; i++){
+    if(hex[i] > 0x1f){ //tratativa para caracteres não imprimíveis serem ignorados
+      ascii[i] = char(hex[i]);
+    }
+  }
+}
+
+// ASCII to Hexadecimal conversion
+void Konverter::ascii2hex(char * ascii, byte * hex){
+  for(byte i = 0; i < 16; i++){
+    if(byte(ascii[i]) < 0x7f){ //tratativa para caracteres além da ASCII serem ignorados
+      hex[i] = byte(ascii[i]);
+    }
+  }
+}
+
+String Konverter::byte2strBin(byte * in, int x){
+  String strOut = "";
+  String strIn="";
+  int sizeStrIn=0;
+  for(int i=0; i < x; i++){
+      strIn = String(in[i],BIN);
+      sizeStrIn=strIn.length();
+      if(sizeStrIn<8){
+        for(int a=0; a<8-sizeStrIn; a++){
+          strIn="0"+strIn;
+        }
+      }
+      strOut=strOut+strIn; 
+   }  
+  return strOut;
+}
+
+void Konverter::string2byteArray(String strIn, byte * bX){
+	unsigned int sizeStrIn = strIn.length();
+	char charOut[sizeStrIn+1];
+	strIn.toCharArray(charOut, sizeStrIn+1);
+	for(int i=0; i < sizeStrIn; i++){
+		bX[i] = byte(charOut[i]);
+	}
+}
+
+
+String Konverter::byte2strB64(byte * byteIn, int x){
+	unsigned int sizeOut = BASE64::encodeLength(x);
+	char encoded[sizeOut];
+	BASE64::encode((const byte*)byteIn,x, encoded);
+	Serial.println(encoded);
+	String strOut = String(encoded);
+    return strOut;
+}
