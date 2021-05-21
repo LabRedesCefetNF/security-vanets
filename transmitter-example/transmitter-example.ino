@@ -27,19 +27,19 @@ void loop() {
 
   /*Convertendo de String para Array de Bytes*/
   byte byteMsg[strMsg.length()];
-  konverter.string2byteArray(strMsg, byteMsg);
+  konverter.string2byteArray(strMsg, byteMsg);   //<<<<<------ aqui é que ocorre
   Serial.print("EM CLARO: ");
   exibe(byteMsg,strMsg.length());
   /*****************************************/
 
-  /*Cifrando Mensagem com AES 128 ECB*/
-  byteMsgCifrada = securino.encript("aes-128-ecb", byteMsg, byteChave);
-  Serial.print("CIFRADA: ");
-  exibe(byteMsgCifrada,strMsg.length());
+ /*Cifrando Mensagem com AES 128 CBC*/
+  byteMsgCifrada = securino.encript("aes-128-cbc", byteMsg, byteChave);
+  Serial.print("CBC: ");
+  exibe(byteMsgCifrada,32);
   /****************************************/
-
+  
   /*Convertendo a Mensagem Cifrada para String Base64*/
-  String strMsgCifradaB64 = konverter.byte2strB64(byteMsgCifrada,strMsg.length());
+  String strMsgCifradaB64 = konverter.byte2strB64(byteMsgCifrada,32);
   Serial.print("CODIFICADA: ");
   Serial.println(strMsgCifradaB64);
   /**************************************/
@@ -48,7 +48,7 @@ void loop() {
     javino.sendMsgRF(strMsgCifradaB64);
     delay(1000);
   /****************************/
-
+   Serial.println();  
 }
 
 /*****Auxiliar *****/
