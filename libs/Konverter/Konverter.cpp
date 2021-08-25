@@ -51,7 +51,18 @@ String Konverter::byte2strB64(byte * byteIn, int x){
 	unsigned int sizeOut = BASE64::encodeLength(x);
 	char encoded[sizeOut];
 	BASE64::encode((const byte*)byteIn,x, encoded);
-	//Serial.println(encoded);
 	String strOut = String(encoded);
     return strOut;
+}
+
+void Konverter::strB64toByte(String str64, byte * bOut){
+	unsigned int sizeStr = str64.length();
+	char encoded[sizeStr];
+	str64.toCharArray(encoded,sizeStr+1); 	
+    int tam = BASE64::decodeLength(encoded);
+    uint8_t raw[tam];
+	BASE64::decode(encoded, raw);
+	for(int i=0; i < tam; i++){
+	  bOut[i]=byte(raw[i]); 
+	}
 }

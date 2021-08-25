@@ -6,7 +6,8 @@ Securino securino;
 Konverter konverter;
 
 String strMsg;
-byte * byteMsg;
+//byte * byteMsg;
+byte byteMsg[32];
 
 void setup() {
   Serial.begin(9600);
@@ -16,10 +17,10 @@ void setup() {
 void loop() {
   if(javino.availableMsgRF()){
     strMsg = javino.getMsg();
-    Serial.println(strMsg);
+    Serial.print("Recebi: ");
     konverter.strB64toByte(strMsg,byteMsg);
     Serial.print("CIFRADA: ");
-    exibe(byteMsg,16);
+    exibe(byteMsg,32);
   }
   
 }
