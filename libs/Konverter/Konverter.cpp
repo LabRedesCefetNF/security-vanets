@@ -46,6 +46,13 @@ void Konverter::string2byteArray(String strIn, byte * bX){
 	}
 }
 
+String Konverter::byteArray2String(byte * bIn){
+	String strOut;
+	for(int i=0; i < 16; i++){
+		strOut = strOut+char(bIn[i]);
+	}
+	return strOut;
+}
 
 String Konverter::byte2strB64(byte * byteIn, int x){
 	unsigned int sizeOut = BASE64::encodeLength(x);
