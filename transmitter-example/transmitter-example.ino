@@ -17,38 +17,40 @@ void setup() {
 }
 
 void loop() {
+  delay(1000);
   /*Mensagem a ser enviada*/
     String strMsg = "0123456789abcdef";
  
-  /*Enviano String em claro*/
+  //Mensagem String em claro
     javino.sendMsgRF(strMsg);
-    delay(1000);
+    Serial.print("EM Str: ");
+    Serial.println(strMsg);
   /****************************/
 
-  /*Convertendo de String para Array de Bytes*/
+  //Convertendo de String para Array de Bytes
   byte byteMsg[strMsg.length()];
   konverter.string2byteArray(strMsg, byteMsg);   //<<<<<------ aqui é que ocorre
-  Serial.print("EM CLARO: ");
+  Serial.print("EM HEX: ");
   exibe(byteMsg,strMsg.length());
   /*****************************************/
 
- /*Cifrando Mensagem com AES 128 CBC*/
+ //Cifrando Mensagem com AES 128 CBC
   byteMsgCifrada = securino.encript("aes-128-cbc", byteMsg, byteChave);
-  Serial.print("CBC: ");
+  Serial.print("EM CBC: ");
   exibe(byteMsgCifrada,32);
   /****************************************/
   
-  /*Convertendo a Mensagem Cifrada para String Base64*/
+  //Convertendo a Mensagem Cifrada para String Base64
   String strMsgCifradaB64 = konverter.byte2strB64(byteMsgCifrada,32);
-  Serial.print("CODIFICADA: ");
+  Serial.print("EM B64: ");
   Serial.println(strMsgCifradaB64);
   /**************************************/
 
-  /*Enviano String Cifrada representada em Base64*/
+  //Enviano Mensagem Cifrada representada em Base64
     javino.sendMsgRF(strMsgCifradaB64);
     delay(1000);
   /****************************/
-   Serial.println();  
+   
 }
 
 /*****Auxiliar *****/
