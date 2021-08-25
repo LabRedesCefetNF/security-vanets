@@ -51,7 +51,7 @@ String Konverter::byte2strB64(byte * byteIn, int x){
 	unsigned int sizeOut = BASE64::encodeLength(x);
 	char encoded[sizeOut];
 	BASE64::encode((const byte*)byteIn,x, encoded);
-	Serial.println(encoded);
+	//Serial.println(encoded);
 	String strOut = String(encoded);
     return strOut;
 }
