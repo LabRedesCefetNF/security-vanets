@@ -7,13 +7,13 @@ void setup(){
 void loop() {
   String cmd="command=go ahead";
   Serial.print("Send:");
-  Serial.print(cmd);
+  Serial.println(cmd);
   trasmiter(cmd);
   delay(5000);
   
   cmd="command=stop now";
   Serial.print("Send:");
-  Serial.print(cmd);
+  Serial.println(cmd);
   trasmiter(cmd);
   delay(5000);
 }
