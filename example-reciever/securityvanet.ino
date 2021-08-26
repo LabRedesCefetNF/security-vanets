@@ -10,7 +10,6 @@ byte byteChave[16];
 String strMsgCifradaB64;
 String strMsgPlain;
 
-//String  strB64;
 byte    byteMsgCifradaRecebida[32];
 byte *  byteMsg;
 String  strClaro;
