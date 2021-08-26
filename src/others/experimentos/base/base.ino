@@ -6,14 +6,16 @@ void setup(){
 
 void loop() {
   String cmd="command=go ahead";
-  Serial.print("Send:");
-  Serial.println(cmd);
-  trasmiter(cmd);
-  delay(5000);
-  
+  comm(cmd);
+  delay(1000);
   cmd="command=stop now";
+  comm(cmd);
+  delay(1000);
+}
+
+void comm(String str){
   Serial.print("Send:");
-  Serial.println(cmd);
-  trasmiter(cmd);
-  delay(5000);
+  Serial.print(str);
+  trasmiter(str);
+  Serial.println("   [OK]");
 }
