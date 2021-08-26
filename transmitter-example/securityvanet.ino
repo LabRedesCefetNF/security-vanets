@@ -1,7 +1,6 @@
 #include "securino.h"
 #include "Javino.h"
 #include "Konverter.h"
-
 Javino javino;
 Securino securino;
 Konverter konverter;
@@ -10,6 +9,12 @@ byte * byteMsgCifrada;
 byte byteChave[16];
 String strMsgCifradaB64;
 String strMsgPlain;
+
+//String  strB64;
+byte    byteMsgCifradaRecebida[32];
+byte *  byteMsg;
+String  strClaro;
+
 
 void enableRF(int iTX, int iRX){
     javino.enableRF(iTX,iRX);
@@ -43,17 +48,16 @@ String getPlainTxt(){
   return strMsgPlain;
 }
 
-void setCipherTxt(String strCiphered){
-    konverter.strB64toByte(strCiphered,byteMsgCifrada);
-    byte * byteMsgRcpt;
-    byteMsgRcpt = securino.decript("aes-128-cbc", byteMsgCifrada, byteChave);
-    strMsgPlain = konverter.byteArray2String(byteMsgRcpt);
+void setCipherTxt(String strIN){
+    konverter.strB64toByte(strIN,byteMsgCifradaRecebida);
+    byteMsg = securino.decript("aes-128-cbc", byteMsgCifradaRecebida, byteChave);
+    strMsgPlain = konverter.byteArray2String(byteMsg);
 }
 
 boolean receiver(){
-  boolean out = false;
   if(javino.availableMsgRF()){
     setCipherTxt(javino.getMsg());
-    out = true;
+    return true;
   }
+  return false;
 }
