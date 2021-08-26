@@ -5,6 +5,15 @@ void setup(){
 }
 
 void loop() {
-  trasmiter("0123456789abcdef");
-  delay(1000);
+  String cmd="command=go ahead";
+  Serial.print("Send:");
+  Serial.print(cmd);
+  trasmiter(cmd);
+  delay(5000);
+  
+  cmd="command=stop now";
+  Serial.print("Send:");
+  Serial.print(cmd);
+  trasmiter(cmd);
+  delay(5000);
 }

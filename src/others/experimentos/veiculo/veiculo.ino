@@ -8,6 +8,7 @@ void setup() {
 void loop() {
 
   if(receiver()){
+    Serial.print("Rcpt:");
     Serial.println(getPlainTxt());
   }
 
