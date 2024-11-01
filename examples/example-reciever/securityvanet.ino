@@ -1,4 +1,4 @@
-#include "securino.h"
+#include "securino.h" /*import library from https://github.com/LabRedesCefetNF/security-vanets/releases/download/1.0.0/securityvanets.zip*/
 #include "Javino.h"
 #include "Konverter.h"
 Javino javino;
