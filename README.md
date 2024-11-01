@@ -8,7 +8,7 @@ Trabalho apresentado no Workshop Regional de Segurança da Informação e de Sis
 ### Whitepaper
 |[![](.others/sol.png)](https://doi.org/10.5753/errc.2021.18551)|[![](.others/researchGate.jpg)](https://www.researchgate.net/publication/355748000_Comunicacao_segura_em_VANET)|
 |:----:|:----:|
-|[Disponível na SOL-SBC](https://link.springer.com/chapter/10.1007/978-3-031-37616-0_29)|[Disponível no ResearchGate](https://www.researchgate.net/publication/372282731_An_IDE_to_Support_the_Development_of_Embedded_Multi-Agent_Systems)|
+|[Disponível na SOL-SBC](https://doi.org/10.5753/errc.2021.18551)|[Disponível no ResearchGate](https://www.researchgate.net/publication/372282731_An_IDE_to_Support_the_Development_of_Embedded_Multi-Agent_Systems)|
 
 ### Apresentação na _XIX Escola Regional de Redes de Computadores (ERRC 2021)_
 |Vídeo|Slides|
